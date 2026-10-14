@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/jpeg" href="images/sign.jpeg">
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; background:#fafafa; }
+    header {
+      background-color: brown;
+      color: white;
+      padding: 40px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+    header h1 { margin:0; font-size:2.5em; }
+    nav a { color:white; margin:0 10px; text-decoration:none; }
+    nav a:hover { text-decoration:underline; }
+
+    main { padding:20px; max-width:900px; margin:auto; }
+    .menu { display:flex; flex-wrap:wrap; gap:20px; }
+    .item {
+      background:white;
+      border:1px solid #ddd;
+      border-radius:8px;
+      width:200px;
+      padding:10px;
+      text-align:center;
+      box-shadow:0 2px 5px rgba(0,0,0,0.1);
+    }
+    .item img { width:100%; height:120px; object-fit:cover; border-radius:6px; }
+    .item h3 { margin:10px 0 5px; font-size:1.2em; }
+    .item p { margin:5px 0; color:#555; }
+    .item button {
+      background:#ff6f61; color:white; border:none;
+      padding:8px 12px; border-radius:4px; cursor:pointer;
+    }
+    .item button:hover { background:#e85c50; }
+
+    #cart {
+      margin-top:30px; background:#fff3e0; padding:20px;
+      border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1);
+    }
+    #cart h2 { margin-top:0; }
+    #cart ul { list-style:none; padding:0; }
+    #cart li { margin:5px 0; }
+    #checkout { margin-top:15px; padding:10px; background:#4caf50; color:white; border:none; border-radius:4px; cursor:pointer; }
+    #checkout:hover { background:#43a047; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Order Your Meal</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="order.html">Order</a>
+	 
+    </nav>
+  </header>
+
+  <main>
+    <h2>Menu</h2>
+    <div class="menu">
+      <div class="item">
+        <img src="images/idombolo.jpeg" alt="Idombolo">
+        <h3>Idombolo</h3>
+        <p>R40</p>
+        <button onclick="addToCart('Idombolo', 50)">Add to Cart</button>
+      </div>
+      <div class="item">
+        <img src="images/boerewors.jpeg" alt="Boerewors">
+        <h3>Boerewors</h3>
+        <p>R30</p>
+        <button onclick="addToCart('Boerwors', 30)">Add to Cart</button>
+      </div>
+      <div class="item">
+        <img src="images/beef_platter.jpeg"Beef Platter">
+        <h3>Meat platter</h3>
+        <p>R90</p>
+        <button onclick="addToCart('Meat Platter', 90)">Add to Cart</button>
+      </div>
+      <div class="item">
+        <img src="images/juice.jpeg" alt="Juice">
+        <h3>Juice</h3>
+        <p>R25</p>
+        <button onclick="addToCart('Juice', 25)">Add to Cart</button>
+      </div>
+    
+	<div class="item">
+        <img src="images/water.jpeg" alt="Water">
+        <h3>Water</h3>
+        <p>R12</p>
+        <button onclick="addToCart('Water', 12)">Add to Cart</button>
+      </div>
+	  	<div class="item">
+        <img src="images/drink.jpeg" alt="Drink">
+        <h3>Drink</h3>
+        <p>R20</p>
+        <button onclick="addToCart('Drink', 20)">Add to Cart</button>
+      </div>
+	  	<div class="item">
+        <img src="images/bunny.jpeg" alt="Bunny Chow">
+        <h3>Bunny Chow</h3>
+        <p>R60</p>
+        <button onclick="addToCart('Bunny Chow', 60)">Add to Cart</button>
+      </div>
+	  	<div class="item">
+        <img src="images/insides.jpeg" alt="Insides">
+        <h3>Insides</h3>
+        <p>R55</p>
+        <button onclick="addToCart('Insides', 55)">Add to Cart</button>
+      </div>
+	  	<div class="item">
+        <img src="images/mutton.jpeg" alt="Mutton">
+        <h3>Mutton</h3>
+        <p>R70</p>
+        <button onclick="addToCart('Mutton', 70)">Add to Cart</button>
+      </div>
+	  	<div class="item">
+        <img src="images/eisbein.jpeg" alt="eisbein">
+        <h3>Eisbein</h3>
+        <p>R30</p>
+        <button onclick="addToCart('Eisbein', 30)">Add to Cart</button>
+      </div>
+	  	<div class="item">
+        <img src="images/cfeet.jpeg" alt="cfeet">
+        <h3>Chicken Feet</h3>
+        <p>R26</p>
+        <button onclick="addToCart('Chicken Feet', 26)">Add to Cart</button>
+      </div>
+	  	<div class="item">
+        <img src="images/vegitables.jpeg" alt="vegitables">
+        <h3>Vegitables</h3>
+        <p>R68</p>
+        <button onclick="addToCart('Vegitables', 68)">Add to Cart</button>
+      </div>
+	  	<div class="item">
+        <img src="images/pap.jpeg" alt="pap">
+        <h3>Pap</h3>
+        <p>R30</p>
+        <button onclick="addToCart('Pap', 30)">Add to Cart</button>
+      </div>
+	</div>
+
+   <div id="cart">
+  <h2>Your Cart</h2>
+  <ul id="cartItems"></ul>
+  <p><strong>Total: R<span id="total">0</span></strong></p>
+  <!-- Checkout button -->
+  <button id="checkout" onclick="goToCheckout()">Checkout</button>
+</div>
+
+<script>
+  let cart = [];
+  let total = 0;
+
+  function addToCart(item, price) {
+    cart.push({item, price});
+    total += price;
+    updateCart();
+  }
+
+  function updateCart() {
+    const cartItems = document.getElementById("cartItems");
+    cartItems.innerHTML = "";
+    cart.forEach(c => {
+      const li = document.createElement("li");
+      li.textContent = c.item + " - R" + c.price;
+      cartItems.appendChild(li);
+    });
+    document.getElementById("total").textContent = total;
+  }
+
+  function goToCheckout() {
+    // Save cart and total in localStorage
+    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem("total", total);
+    // Redirect to customer details page
+    window.location.href = "customer.html";
+  }
+</script>
+
+  </main>
+
+ <footer>
+    <p>© 2026 Foodies Express |234 Allen Road, Volkrust, Mpumalanga, South Africa | Phone: +27 17 894 2367</p>
+    <p>
+      <a href="https://facebook.com" target="_blank">Facebook</a> |
+      <a href="https://instagram.com" target="_blank">Instagram</a>
+    </p>
+  </footer> 
+
+ 
+  
+
+ <script>
+    let cart = [];
+    let total = 0;
+
+    function addToCart(item, price) {
+      cart.push({item, price});
+      total += price;
+      updateCart();
+    }
+
+    function updateCart() {
+      const cartItems = document.getElementById("cartItems");
+      cartItems.innerHTML = "";
+      cart.forEach(c => {
+        const li = document.createElement("li");
+        li.textContent = c.item + " - R" + c.price;
+        cartItems.appendChild(li);
+      });
+      document.getElementById("total").textContent = total;
+    }
+
+    function goToCheckout() {
+      // Save cart and total in localStorage so next page can access it
+      localStorage.setItem("cart", JSON.stringify(cart));
+      localStorage.setItem("total", total);
+      window.location.href = "customer.html";
+    }
+  </script>
+</body>
+</html>

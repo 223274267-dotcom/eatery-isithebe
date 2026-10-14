@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Customer Details</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; background:#fdf6f0; }
+    header {
+      background-color: army green;
+      color: white;
+      padding: 40px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+    header h1 { margin:0; font-size:2.5em; }
+
+    main { padding:30px; max-width:700px; margin:auto; }
+    form {
+      background:white; padding:30px; border-radius:10px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.1);
+    }
+    label { display:block; font-size:1.3em; margin:15px 0 5px; }
+    input, select, textarea {
+      width:100%; padding:12px; font-size:1.2em;
+      margin-bottom:15px; border:1px solid #ccc; border-radius:6px;
+    }
+    #addressField { display:none; }
+    button {
+      background:#4caf50; color:white; border:none;
+      padding:15px; font-size:1.3em; border-radius:6px; cursor:pointer;
+      width:100%;
+    }
+    button:hover { background:#43a047; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📝 Enter Your Details</h1>
+  </header>
+
+  <main>
+    <form id="customerForm">
+      <label for="name">First Name:</label>
+      <input type="text" id="name" required>
+
+      <label for="surname">Surname:</label>
+      <input type="text" id="surname" required>
+
+      <label for="phone">Phone Number:</label>
+      <input type="tel" id="phone" required>
+
+      <label for="delivery">Preferred Delivery Method:</label>
+      <select id="delivery" required onchange="toggleAddress()">
+        <option value="">--Select--</option>
+        <option value="pickup">Pick up in store</option>
+        <option value="delivery">Delivery to address</option>
+      </select>
+
+      <div id="addressField">
+        <label for="address">Physical Address:</label>
+        <!-- Using textarea for a bigger, more attractive input -->
+        <textarea id="address" rows="3" placeholder="Enter your street, suburb, city, and postal code"></textarea>
+      </div>
+
+      <button type="submit">Confirm Order</button>
+    </form>
+  </main>
+
+  <script>
+    function toggleAddress() {
+      const deliveryMethod = document.getElementById("delivery").value;
+      const addressField = document.getElementById("addressField");
+      if (deliveryMethod === "delivery") {
+        addressField.style.display = "block";
+        document.getElementById("address").required = true;
+      } else {
+        addressField.style.display = "none";
+        document.getElementById("address").required = false;
+      }
+    }
+
+    document.getElementById("customerForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const surname = document.getElementById("surname").value;
+      const phone = document.getElementById("phone").value;
+      const delivery = document.getElementById("delivery").value;
+      const address = document.getElementById("address").value;
+
+      // Retrieve cart and total from localStorage
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const total = localStorage.getItem("total") || 0;
+
+      // Generate random order number
+      const orderNumber = Math.floor(Math.random() * 1000000);
+
+      let orderSummary = "✅ Order Confirmed!\n\n";
+      orderSummary += "Order Number: #" + orderNumber + "\n";
+      orderSummary += "Customer: " + name + " " + surname + "\n";
+      orderSummary += "Phone: " + phone + "\n";
+      orderSummary += "Delivery Method: " + delivery + "\n";
+      if (delivery === "delivery") {
+        orderSummary += "Address: " + address + "\n";
+      }
+      orderSummary += "Total: R" + total + "\n\n";
+      orderSummary += "Items:\n";
+      cart.forEach(c => { orderSummary += "- " + c.item + " (R" + c.price + ")\n"; });
+
+      orderSummary += "\n📩 You will receive an SMS confirmation with your order number shortly.";
+
+      alert(orderSummary);
+    });
+  </script>
+</body>
+</html>
